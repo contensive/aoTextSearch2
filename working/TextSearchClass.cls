@@ -911,7 +911,7 @@ Private Function OpenCSTextSearch(KeyWordList As String, VisitID As Long, PageSi
     Dim CS As Long
     Dim ContentName As String
     Dim ContentID As Long
-    Dim CDef As CDefType
+    'Dim CDef As CDefType
     Dim ChildContentIDList As String
     Dim LenSearchWord As String
     Dim TempName As String
