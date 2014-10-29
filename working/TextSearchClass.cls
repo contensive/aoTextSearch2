@@ -74,7 +74,7 @@ Private Function GetContent(OptionString As String) As String
     Dim QSName As String
     Dim QSValue As String
     Dim RefreshHiddens As String
-    Dim Stream As New fastStringClass
+    Dim Stream As New FastStringClass
     Dim WordList As String
     Dim CSPointer As Long
     Dim Filename As String
@@ -502,7 +502,7 @@ Private Function GetTextSearch(KeyWordList As String, PageSize As Long, InitialP
     Dim PrimaryImageHeight As Long
     Dim RowLast As Long
     Dim ResultsLine As String
-    Dim Stream As New fastStringClass
+    Dim Stream As New FastStringClass
     Dim Caption As String
     Dim Length As Long
     Dim Body As String
@@ -783,7 +783,9 @@ Private Function GetTextSearch(KeyWordList As String, PageSize As Long, InitialP
                     Body = ATag & "<img src=""" & PrimaryImageLink & """ height=""100"" border=0 class=""image""></a>" & Body
                 End If
             End If
-            If Length < 1024 Then
+            If Length <= 0 Then
+                Detail = ATag & Link & "</a>"
+            ElseIf Length < 1024 Then
                 Detail = ATag & Link & "</a> " & Length & " characters"
             Else
                 Detail = ATag & Link & "</a> " & Int(Length / 1024) & "K characters"
