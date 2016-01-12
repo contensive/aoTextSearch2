@@ -361,7 +361,8 @@ Private Function GetContent(OptionString As String) As String
     ' ----- custom edit toolbar for sections to include
     '
 Dim lastid As Long
-    If IncludeSearchResults And Main.isediting("text search section rules") Then
+    If IncludeSearchResults And Main.isediting("") Then
+    'If IncludeSearchResults And Main.isediting("text search section rules") Then
         toolbar = "Sections to Block from this search form"
         subForm = ""
         list = ""
