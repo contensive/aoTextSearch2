@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<Collection name="Text Search 2" guid="{996BBC70-5941-4C02-B54B-03B8D6EF430B}" system="No" updatable="Yes" blockNavigatorNode="No">
+	<HelpLink>http://support.contensive.com/Text-Search-Addon</HelpLink>
+	<Help></Help>
+	<Addon name="Text Search 2" guid="{57A66186-9704-48E2-A718-844107E4D305}" type="Add-on">
+		<Copy></Copy>
+		<CopyText></CopyText>
+		<ActiveXProgramID></ActiveXProgramID>
+		<DotNetClass><![CDATA[Contensive.Addons.TextSearch.SearchFormClass]]></DotNetClass>
+		<ArgumentList><![CDATA[Search Results Page=Here[Here:0|ListID(Page Content)]
+			Include Search Results=Yes[Yes]checkbox
+			Include Image in Results=Yes[Yes]checkbox
+			Include Sample Text in Results=Yes[Yes]checkbox
+			include Section Options=[Yes]checkbox
+			include Topic Options=[Yes]checkbox
+
+			]]></ArgumentList>
+		<AsAjax>No</AsAjax>
+		<Filter>No</Filter>
+		<Help></Help>
+		<HelpLink></HelpLink>
+		<Icon Link="" width="0" height="0" sprites="0" />
+		<InIframe>No</InIframe>
+		<BlockEditTools>No</BlockEditTools>
+		<FormXML></FormXML>
+		<IsInline>No</IsInline>
+		<JavascriptOnLoad></JavascriptOnLoad>
+		<JavascriptInHead><![CDATA[function textSearchClr(name) {
+			var n=document.getElementsByName(name);
+			for(var i=0;i<n.length;i++){
+			n[i].checked=false
+			}
+			}]]></JavascriptInHead>
+		<JavascriptBodyEnd></JavascriptBodyEnd>
+		<MetaDescription></MetaDescription>
+		<OtherHeadTags></OtherHeadTags>
+		<Content>Yes</Content>
+		<Template>Yes</Template>
+		<Admin>No</Admin>
+		<OnPageEndEvent>No</OnPageEndEvent>
+		<OnPageStartEvent>No</OnPageStartEvent>
+		<OnBodyStart>No</OnBodyStart>
+		<OnBodyEnd>No</OnBodyEnd>
+		<RemoteMethod>No</RemoteMethod>
+		<ProcessRunOnce>No</ProcessRunOnce>
+		<ProcessInterval>0</ProcessInterval>
+		<PageTitle></PageTitle>
+		<RemoteAssetLink></RemoteAssetLink>
+		<Styles><![CDATA[
+
+			.textSearch2Con {}
+			.textSearch2Con .searchFormCon {clear:both;padding-top:20px;padding-bottom:20px;}
+			.textSearch2Con .searchResultsCon .summary {padding-top:10px;padding-bottom:10px;text-align:right;}
+			.textSearch2Con .searchResultsCon .listItemCon {clear:both;}
+			.textSearch2Con .searchResultsCon .listItemCon .image {float:left;margin-top:10px;margin-right:10px;margin-bottom:10px;}
+			.textSearch2Con .searchResultsCon .listItemCon .caption {font-size:120%;font-weight:bold;padding-top:15px;text-align:left;}
+			.textSearch2Con .searchResultsCon .listItemCon .caption a {text-decoration:underline}
+			.textSearch2Con .searchResultsCon .listItemCon .caption a:hover {}
+			.textSearch2Con .searchResultsCon .listItemCon .caption a:visited {}
+			.textSearch2Con .searchResultsCon .listItemCon .body {padding-top:5px;}
+			.textSearch2Con .searchResultsCon .listItemCon .detail {font-size:90%;padding-top:5px;}
+			.textSearch2Con .searchResultsCon .listItemCon .detail a {text-decoration:none;color:green;}
+			.textSearch2Con .searchResultsCon .listItemCon .detail a:hover {text-decoration:none;color:green;}
+			.textSearch2Con .searchResultsCon .listItemCon .detail a:visited {text-decoration:none;color:green;}
+			.textSearch2Con .searchResultsCon .pageLinkCon {padding-left:20px;padding-top:10px;padding-bottom:10px;height:30px;clear:both;display:table;}
+			.textSearch2Con .searchResultsCon .pageLinkCon ul {list-style:none;margin:0;padding:0;}
+			.textSearch2Con .searchResultsCon .pageLinkCon ul li {background-color:white;margin-right:0px;line-height:28px;float:left;}
+			.textSearch2Con .searchResultsCon .pageLinkCon ul li div {display:inline;background-color:white;width:20px;height:20px;padding:5px;text-align:center;border:1px solid black;margin:0 2px 2px 0;}
+
+			.textSearch2Con .tsSections {clear: both; margin: 0 0 0 0; padding: 8px 0 0 0; }
+			.textSearch2Con .tsSectionHead {border-bottom: 1px solid #888; padding: 10px 0 5px 0; clear: both;}
+			.textSearch2Con .tsSectionList {list-style-type:none}
+			.textSearch2Con .tsSectionList li {list-style-type:none; float:left; width:200px; }
+			.textSearch2Con .tsSectionList li input {float: left;}
+			.textSearch2Con .tsSectionList li p {margin: 0 0 0 30px;}
+
+			.textSearch2Con .tsTopics {clear: both; margin: 0 0 0 0; padding: 8px 0 0 0; }
+			.textSearch2Con .tsTopicHead {border-bottom: 1px solid #888; padding: 10px 0 5px 0; clear: both;}
+			.textSearch2Con .tsTopicList {list-style-type:none}
+			.textSearch2Con .tsTopicList li {list-style-type:none; float:left; width:200px; }
+			.textSearch2Con .tsTopicList li input {float: left;}
+			.textSearch2Con .tsTopicList li p {margin: 0 0 0 30px;}
+
+			.textSearch2Con .tsToolBar {clear: both; margin: 20px 0 0 0 }
+			.textSearch2Con .tsSectionBlocks {clear: both; margin: 0 0 0 0; padding: 8px 0 0 0; }
+			.textSearch2Con .tsSectionBlockList {list-style-type:none}
+			.textSearch2Con .tsSectionBlockList li {list-style-type:none; float:left; width:200px; }
+			.textSearch2Con .tsSectionBlockList li input {float: left;}
+			.textSearch2Con .tsSectionBlockList li p {margin: 0 0 0 30px;}
+			.textSearch2Con .tsToolBar .tsButton {clear: both; margin: 0 0 0 0; padding: 8px 0 0 0; }
+			]]></Styles>
+		<Scripting Language="" EntryPoint="" Timeout="5000"/>
+	</Addon>
+	<CDef Name="Text Search Section Rules" Active="1" AdminOnly="0" AllowAdd="1" AllowCalendarEvents="0" AllowContentChildTool="0" AllowContentTracking="0" AllowDelete="1" AllowMetaContent="0" AllowTopicRules="0" AllowWorkflowAuthoring="0" AuthoringDataSourceName="Default" AuthoringTableName="TextSearchSectionRules" ContentDataSourceName="Default" ContentTableName="TextSearchSectionRules" DefaultSortMethod="By Name" DeveloperOnly="1" DropDownFieldList="Name" EditorGroupName="Content Editors" Parent="" IconLink="" IconHeight="0" IconWidth="0" IconSprites="0" isbasecontent="0" guid="{B8F18F17-46BF-4FF5-9005-62D90EE4F01F}" >
+		<Field Name="Name" active="True" AdminOnly="False" Authorable="False" Caption="Name" DeveloperOnly="False" EditSortPriority="110" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="0" RedirectID="0" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
+		<Field Name="Active" active="True" AdminOnly="False" Authorable="False" Caption="Active" DeveloperOnly="False" EditSortPriority="200" FieldType="Boolean" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="0" RedirectID="0" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="1" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
+		<Field Name="SortOrder" active="True" AdminOnly="False" Authorable="False" Caption="Alpha Sort Order" DeveloperOnly="False" EditSortPriority="2000" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="0" RedirectID="0" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
+		<Field Name="sectionId" active="True" AdminOnly="False" Authorable="True" Caption="Section" DeveloperOnly="False" EditSortPriority="1100" FieldType="Lookup" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="Site Sections" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
+		<Field Name="InstanceId" active="True" AdminOnly="False" Authorable="True" Caption="Instance" DeveloperOnly="False" EditSortPriority="1000" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
+	</CDef>
+	<CDef Name="Search Keywords" Active="1" AdminOnly="0" AllowAdd="1" AllowCalendarEvents="0" AllowContentChildTool="0" AllowContentTracking="0" AllowDelete="1" AllowMetaContent="0" AllowTopicRules="0" AllowWorkflowAuthoring="0" AuthoringDataSourceName="Default" AuthoringTableName="ccSearchKeywords" ContentDataSourceName="Default" ContentTableName="ccSearchKeywords" DefaultSortMethod="By Name" DeveloperOnly="0" DropDownFieldList="NAME" EditorGroupName="" Parent="" IconLink="" IconHeight="0" IconWidth="0" IconSprites="0" isbasecontent="0" guid="{5AE022BF-40AD-4EBE-97F5-ED2365F5159F}" >
+		<Field Name="Name" active="True" AdminOnly="False" Authorable="True" Caption="Name" DeveloperOnly="False" EditSortPriority="110" FieldType="Text" HTMLContent="False" IndexColumn="1" IndexSortDirection="" IndexSortOrder="0" IndexWidth="80" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="True" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
+		<Field Name="Active" active="True" AdminOnly="False" Authorable="True" Caption="Active" DeveloperOnly="False" EditSortPriority="200" FieldType="Boolean" HTMLContent="False" IndexColumn="99" IndexSortDirection="" IndexSortOrder="0" IndexWidth="0" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="1" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
+		<Field Name="SortOrder" active="True" AdminOnly="False" Authorable="False" Caption="Alpha Sort Order" DeveloperOnly="False" EditSortPriority="2000" FieldType="Text" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="0" RedirectID="0" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="False" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
+		<Field Name="Count" active="True" AdminOnly="False" Authorable="True" Caption="Count" DeveloperOnly="False" EditSortPriority="200" FieldType="Integer" HTMLContent="False" IndexColumn="0" IndexSortDirection="" IndexSortOrder="0" IndexWidth="20" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="True" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
+		<Field Name="VisitID" active="True" AdminOnly="False" Authorable="True" Caption="Visit" DeveloperOnly="False" EditSortPriority="300" FieldType="Lookup" HTMLContent="False" IndexColumn="99" IndexSortDirection="" IndexSortOrder="0" IndexWidth="0" RedirectID="" RedirectPath="" Required="False" TextBuffered="False" UniqueName="False" DefaultValue="" RSSTitle="False" RSSDescription="False" MemberSelectGroupID="0" EditTab="" Scramble="False" LookupList="" NotEditable="False" Password="False" ReadOnly="True" ManyToManyRulePrimaryField="" ManyToManyRuleSecondaryField="" IsModified="False" IsBaseField="False" LookupContent="Visits" RedirectContent="" ManyToManyContent="" ManyToManyRuleContent="" ></Field>
+	</CDef>
+	<ImportCollection name="Spider">{1EC821F6-CB2B-4371-8CD8-02F6DC44521B}</ImportCollection>
+	<Resource name="aotextsearch.dll" type="executable" path="" />
+</Collection>

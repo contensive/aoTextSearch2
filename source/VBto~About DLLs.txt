@@ -1,0 +1,11 @@
+Unregistered DLLs - None
+
+Registered DLLs:
+
+
+{00020430-0000-0000-C000-000000000046} v2.0	[stdole]	"C:\Windows\SysWOW64\stdole2.tlb"
+{2A75196C-D9EB-4129-B803-931327F72D5C} v2.8	[ADODB]	"C:\Program Files (x86)\Common Files\System\ado\msado28.tlb"
+{5983FABA-531E-4B0E-B859-8EE6CFD7BE31} v22.6 -> v34.6	[ccKrnl]	"C:\Program Files (x86)\kma\Contensive\ccKrnl.exe"
+{3176E72A-A0A5-42A8-AEEA-B9B21405BEE7} v1.1 -> v1.2	[kmaHTML]	"C:\Program Files (x86)\Common Files\kma Shared\kmaHTML.dll"
+{2A6EF997-D9D2-4775-A113-0A408375CFB2} v1.0	[FastString]	"C:\Program Files (x86)\Common Files\kma Shared\kmafstr2.dll"
+{DFF3508D-D3BF-4D2E-AE73-A8374E764F07} v3.1 -> v3.4	[kmaFileSystem3]	"C:\Program Files (x86)\Common Files\kma Shared\kmafile3.dll"
