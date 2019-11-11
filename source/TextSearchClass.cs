@@ -122,7 +122,7 @@ namespace Contensive.Addons.TextSearch {
                             QSName = cp.Utils.DecodeResponseVariable(QSNameValues[0]);
                             switch (Strings.LCase(QSName)) {
 
-                                case "qwordlist":
+                                case "textsearchwordlist":
                                 case "button":
                                 case "pagenumber":
                                 case "pagesize": {
@@ -193,6 +193,7 @@ namespace Contensive.Addons.TextSearch {
                         // 
                         // ----- Prep the keywords for text matching
                         // 
+                        
                         string[] KeywordSplit = iKeyWordList.Split(' ');
                         string Keyword = "";
                         int Index;
@@ -222,7 +223,9 @@ namespace Contensive.Addons.TextSearch {
 
                         int RowPointer = 0;
                         int RowBAse = (iPageSize * (PageNumber - 1));
-                        DataRowCount = CSSearch.GetRowCount();
+                        string sql = CSSearch.GetSQL();
+                        DataRowCount = TotalRowsFromFirstPage(cp, sql, PageSize, PageNumber);
+                        //DataRowCount = CSSearch.GetRowCount();
                         int RowLast = RowBAse + PageSize;
                         if (RowLast > DataRowCount) {
                             RowLast = DataRowCount;
@@ -398,7 +401,7 @@ namespace Contensive.Addons.TextSearch {
                 if (DataRowCount == 0) {
                     ResultsLine = "Your search " + resultLineDetails + " returned no results.";
                 } else {
-                    cp.Doc.AddRefreshQueryString("QWordList", KeyWordList);
+                    cp.Doc.AddRefreshQueryString("TextSearchWordList", KeyWordList);
                     cp.Doc.AddRefreshQueryString("PageNumber", PageNumber.ToString());
                     cp.Doc.AddRefreshQueryString("PageSize", iPageSize.ToString());
                     cp.Doc.AddRefreshQueryString("Button", "Search");
@@ -595,6 +598,28 @@ namespace Contensive.Addons.TextSearch {
         // 
         private string GetWordSearchExcludeList(CPBaseClass cp) {
             return cp.CdnFiles.Read("WordSearchExcludeList.txt") + "\r\n";
+        }
+
+        // 
+        // =============================================================================
+        // 
+        // =============================================================================
+        // 
+        private int TotalRowsFromFirstPage(CPBaseClass cp, string sql, int pageSize, int pageNumber)
+        {
+            var csTotalRows = cp.CSNew();
+            int rowCount = 0;
+            try
+            {
+                System.Data.DataTable dt = cp.Db.ExecuteQuery(sql, 1, 10000);               
+                rowCount = dt.Rows.Count;
+                return rowCount;
+            }
+            catch (Exception ex)
+            {
+                cp.Site.ErrorReport(ex);
+                return rowCount;
+            }
         }
 
     }
