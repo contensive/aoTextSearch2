@@ -580,7 +580,7 @@ namespace Contensive.Addons.TextSearch {
                     }
                     // 
                     // Get results
-                    sql = "SELECT d.ID AS ID, d.Name AS LinkLabel, d.Link AS Link, d.TextOnlyFilename as BriefFilename, d.dateLastModified as dateLastModified, d.MetaKeywords as MetaKeywords, d.MetaDescription as MetaDescription, d.Length as Length, d.BodyText as BodyText, d.PrimaryImageLink as PrimaryImageLink, d.PrimaryImageWidth as PrimaryImageWidth, d.PrimaryImageHeight as PrimaryImageHeight" + " FROM " + sqlFrom + " WHERE " + sqlWhere + " ORDER BY d.dateLastModified Desc;";
+                    sql = "SELECT d.ID AS ID, d.Name AS LinkLabel, d.Link AS Link, d.TextOnlyFilename as BriefFilename, d.dateLastModified as dateLastModified, d.MetaKeywords as MetaKeywords, d.MetaDescription as MetaDescription, d.Length as Length, d.BodyText as BodyText, d.PrimaryImageLink as PrimaryImageLink, d.PrimaryImageWidth as PrimaryImageWidth, d.PrimaryImageHeight as PrimaryImageHeight" + " FROM " + sqlFrom + " WHERE " + sqlWhere + " ORDER BY d.dateadded desc, d.dateLastModified Desc;";
                     OpenCSTextSearch.OpenSQL(sql,"", PageSize, PageNumber);
                 }
                 // 
