@@ -190,209 +190,207 @@ namespace Contensive.Addons.TextSearch {
                     // 
                     resultLineDetails = "<i>" + KeyWordList + "</i>";
                     using (CPCSBaseClass CSSearch = OpenCSTextSearch(cp, KeyWordList, cp.Visit.Id, iPageSize, PageNumber, sectionAll, sectionIdList, topicAll, topicIdList, instanceId, ref blockedSectionIdList)) {
-                        // 
-                        // ----- Prep the keywords for text matching
-                        // 
-                        
-                        string[] KeywordSplit = iKeyWordList.Split(' ');
-                        string Keyword = "";
-                        int Index;
-                        for (Index = 0; Index <= Information.UBound(KeywordSplit, 1); Index++) {
-                            Keyword = Strings.Trim(Strings.LCase(KeywordSplit[Index]));
-                            if ((Keyword.Length > 2) && (Strings.Left(Keyword, 1) == "\"") && (Strings.Right(Keyword, 1) == "\"")) {
-                                Keyword = Strings.Mid(Keyword, 2, Keyword.Length - 2);
-                            }
-                            KeywordSplit[Index] = Keyword;
-                        }
-                        const short ColumnCount = 1;
-                        // 
-                        // ----- Display the results
-                        // 
-                        string[] ColAlign = new string[ColumnCount + 1];
-                        string[] ColCaption = new string[ColumnCount + 1];
-                        string[] ColWidth = new string[ColumnCount + 1];
-                        string[,] Content = new string[iPageSize + 1, ColumnCount + 1];
-                        int ColumnPointer;
-                        // 
-                        for (ColumnPointer = 0; ColumnPointer <= ColumnCount - 1; ColumnPointer++) {
-                            ColAlign[ColumnPointer] = "Left";
-                            ColCaption[ColumnPointer] = "";
-                        }
-                        ColWidth[0] = "100%";
-                        // 
-
-                        int RowPointer = 0;
-                        int RowBAse = (iPageSize * (PageNumber - 1));
-                        string sql = CSSearch.GetSQL();
-                        DataRowCount = TotalRowsFromFirstPage(cp, sql, PageSize, PageNumber);
-                        //DataRowCount = CSSearch.GetRowCount();
-                        int RowLast = RowBAse + PageSize;
-                        if (RowLast > DataRowCount) {
-                            RowLast = DataRowCount;
-                        }
-                        ResultsLine = "Results " + Convert.ToString(1 + RowBAse) + " to " + Convert.ToString(RowLast) + " of " + Convert.ToString(DataRowCount) + " for " + resultLineDetails;
-                        while (CSSearch.OK() && (RowPointer < iPageSize)) {
-                            string PrimaryImageLink = CSSearch.GetText("PrimaryImageLink");
-                            int PrimaryImageWidth = CSSearch.GetInteger("PrimaryImageWidth");
-                            int PrimaryImageHeight = CSSearch.GetInteger("PrimaryImageHeight");
-                            int Length = CSSearch.GetInteger("Length");
-                            string Body = "";
+                        if (CSSearch.OK()) {
                             // 
-                            if (IncludeDescription) {
-                                string BodyText = CSSearch.GetText("BodyText");
-                                BodyText = System.Net.WebUtility.HtmlEncode(BodyText);
-                                string PostBodyText = "";
-                                string PreBodyText = "";
+                            // ----- Prep the keywords for text matching
+                            string[] KeywordSplit = iKeyWordList.Split(' ');
+                            string Keyword = "";
+                            int Index;
+                            for (Index = 0; Index <= Information.UBound(KeywordSplit, 1); Index++) {
+                                Keyword = Strings.Trim(Strings.LCase(KeywordSplit[Index]));
+                                if ((Keyword.Length > 2) && (Strings.Left(Keyword, 1) == "\"") && (Strings.Right(Keyword, 1) == "\"")) {
+                                    Keyword = Strings.Mid(Keyword, 2, Keyword.Length - 2);
+                                }
+                                KeywordSplit[Index] = Keyword;
+                            }
+                            const short ColumnCount = 1;
+                            // 
+                            // ----- Display the results
+                            // 
+                            string[] ColAlign = new string[ColumnCount + 1];
+                            string[] ColCaption = new string[ColumnCount + 1];
+                            string[] ColWidth = new string[ColumnCount + 1];
+                            string[,] Content = new string[iPageSize + 1, ColumnCount + 1];
+                            int ColumnPointer;
+                            // 
+                            for (ColumnPointer = 0; ColumnPointer <= ColumnCount - 1; ColumnPointer++) {
+                                ColAlign[ColumnPointer] = "Left";
+                                ColCaption[ColumnPointer] = "";
+                            }
+                            ColWidth[0] = "100%";
+                            // 
+                            int RowPointer = 0;
+                            int RowBAse = (iPageSize * (PageNumber - 1));
+                            string sql = CSSearch.GetSQL();
+                            DataRowCount = TotalRowsFromFirstPage(cp, sql, PageSize, PageNumber);
+                            int RowLast = RowBAse + PageSize;
+                            if (RowLast > DataRowCount) {
+                                RowLast = DataRowCount;
+                            }
+                            ResultsLine = "Results " + Convert.ToString(1 + RowBAse) + " to " + Convert.ToString(RowLast) + " of " + Convert.ToString(DataRowCount) + " for " + resultLineDetails;
+                            while (CSSearch.OK() && (RowPointer < iPageSize)) {
+                                string PrimaryImageLink = CSSearch.GetText("PrimaryImageLink");
+                                int PrimaryImageWidth = CSSearch.GetInteger("PrimaryImageWidth");
+                                int PrimaryImageHeight = CSSearch.GetInteger("PrimaryImageHeight");
+                                int Length = CSSearch.GetInteger("Length");
+                                string Body = "";
                                 // 
-                                // trim BodyText down to size
-                                // 
-                                if (BodyText.Length > OverviewLength) {
-                                    int MinPosition = 0;
-                                    int MaxPosition = 0;
+                                if (IncludeDescription) {
+                                    string BodyText = CSSearch.GetText("BodyText");
+                                    BodyText = System.Net.WebUtility.HtmlEncode(BodyText);
+                                    string PostBodyText = "";
+                                    string PreBodyText = "";
                                     // 
-                                    // Determine Min and Max positions
+                                    // trim BodyText down to size
+                                    // 
+                                    if (BodyText.Length > OverviewLength) {
+                                        int MinPosition = 0;
+                                        int MaxPosition = 0;
+                                        // 
+                                        // Determine Min and Max positions
+                                        // 
+                                        for (Index = 0; Index <= Information.UBound(KeywordSplit, 1); Index++) {
+                                            int Position = Strings.InStr(1, BodyText, KeywordSplit[Index], CompareMethod.Text);
+                                            if ((Position != 0) && ((MinPosition == 0) || (Position < MinPosition))) {
+                                                MinPosition = Position;
+                                            }
+                                            Position = Strings.InStrRev(BodyText, KeywordSplit[Index], -1, CompareMethod.Text);
+                                            if ((Position != 0) && ((MaxPosition == 0) || (Position > MaxPosition))) {
+                                                MaxPosition = Position;
+                                            }
+                                        }
+                                        int SpanLength = MaxPosition - MinPosition;
+                                        PreBodyText = "";
+                                        PostBodyText = "";
+                                        int StartPosition;
+                                        if (MinPosition == 0) {
+                                            // 
+                                            // not found, return first 200 characters
+                                            // 
+                                            StartPosition = 1;
+                                            if (BodyText.Length > OverviewLength) {
+                                                PostBodyText = "...";
+                                            }
+                                            BodyText = Strings.Mid(BodyText, StartPosition, OverviewLength);
+                                        } else if ((SpanLength == 0) || (SpanLength > OverviewLength)) {
+                                            // 
+                                            // only one found or the span is long, return 100 before min, 100 after min
+                                            // 
+                                            StartPosition = Convert.ToInt32(MinPosition - (OverviewLength / 2.0));
+                                            if (StartPosition < 1) {
+                                                // 
+                                                // Start at the first position of bodytext
+                                                // 
+                                                StartPosition = 1;
+                                                if (BodyText.Length > OverviewLength) {
+                                                    PostBodyText = "...";
+                                                }
+                                                BodyText = Strings.Mid(BodyText, StartPosition, OverviewLength);
+                                            } else if ((StartPosition + OverviewLength) > BodyText.Length) {
+                                                // 
+                                                // End the copy at the end of the bodytext
+                                                // 
+                                                StartPosition = BodyText.Length - OverviewLength + 1;
+                                                BodyText = Strings.Mid(BodyText, StartPosition);
+                                                PreBodyText = "...";
+                                            } else {
+                                                BodyText = Strings.Mid(BodyText, StartPosition, OverviewLength);
+                                                PreBodyText = "...";
+                                                PostBodyText = "...";
+                                            }
+                                        } else {
+                                            // 
+                                            // Span is short, return the span, some before, some after
+                                            // 
+                                            StartPosition = Convert.ToInt32(MinPosition - ((OverviewLength - SpanLength) / 2.0));
+                                            if (StartPosition < 1) {
+                                                // 
+                                                // Start at the first position of bodytext
+                                                // 
+                                                StartPosition = 1;
+                                                if (BodyText.Length > OverviewLength) {
+                                                    PostBodyText = "...";
+                                                }
+                                                BodyText = Strings.Mid(BodyText, StartPosition, OverviewLength);
+                                            } else if ((StartPosition + OverviewLength) > BodyText.Length) {
+                                                // 
+                                                // End the copy at the end of the bodytext
+                                                // 
+                                                StartPosition = BodyText.Length - OverviewLength + 1;
+                                                BodyText = Strings.Mid(BodyText, StartPosition);
+                                                PreBodyText = "...";
+                                            } else {
+                                                BodyText = Strings.Mid(BodyText, StartPosition, OverviewLength);
+                                                PreBodyText = "...";
+                                                PostBodyText = "...";
+                                            }
+                                        }
+                                    }
+                                    // 
+                                    // bold all occurances of each keywords, keep the min and max position
                                     // 
                                     for (Index = 0; Index <= Information.UBound(KeywordSplit, 1); Index++) {
-                                        int Position = Strings.InStr(1, BodyText, KeywordSplit[Index], CompareMethod.Text);
-                                        if ((Position != 0) && ((MinPosition == 0) || (Position < MinPosition))) {
-                                            MinPosition = Position;
-                                        }
-                                        Position = Strings.InStrRev(BodyText, KeywordSplit[Index], -1, CompareMethod.Text);
-                                        if ((Position != 0) && ((MaxPosition == 0) || (Position > MaxPosition))) {
-                                            MaxPosition = Position;
+                                        Keyword = KeywordSplit[Index];
+                                        int KeyWordLength = Keyword.Length;
+                                        if (Keyword != "") {
+                                            int KeywordPosition = Strings.InStr(1, BodyText, Keyword, CompareMethod.Text);
+                                            int LoopCount = 0;
+                                            while (KeywordPosition != 0 && (LoopCount < 100)) {
+                                                string SourceWord = Strings.Mid(BodyText, KeywordPosition, KeyWordLength);
+                                                if (KeywordPosition == 1) {
+                                                    BodyText = "<b>" + Strings.Mid(BodyText, KeywordPosition, KeyWordLength) + "</b>" + Strings.Mid(BodyText, KeywordPosition + KeyWordLength);
+                                                } else {
+                                                    BodyText = Strings.Mid(BodyText, 1, KeywordPosition - 1) + "<b>" + Strings.Mid(BodyText, KeywordPosition, KeyWordLength) + "</b>" + Strings.Mid(BodyText, KeywordPosition + KeyWordLength);
+                                                }
+                                                KeywordPosition = Strings.InStr((KeywordPosition + KeyWordLength + 6), BodyText, Keyword, CompareMethod.Text);
+                                                LoopCount += 1;
+                                            }
                                         }
                                     }
-                                    int SpanLength = MaxPosition - MinPosition;
-                                    PreBodyText = "";
-                                    PostBodyText = "";
-                                    int StartPosition;
-                                    if (MinPosition == 0) {
+                                    Body = PreBodyText + BodyText + PostBodyText;
+                                }
+                                // 
+                                string LinkLabel = CSSearch.GetText("LinkLabel");
+                                string Link = CSSearch.GetText("Link");
+                                string ATag = "<a href=\"" + Link + "\">";
+                                // 
+                                string Caption = ATag + LinkLabel + "</a>";
+                                if (IncludeImage && (PrimaryImageLink != "")) {
+                                    if (PrimaryImageWidth == 0 && PrimaryImageHeight == 0) {
                                         // 
-                                        // not found, return first 200 characters
+                                        // No dimensions, set width=100
                                         // 
-                                        StartPosition = 1;
-                                        if (BodyText.Length > OverviewLength) {
-                                            PostBodyText = "...";
-                                        }
-                                        BodyText = Strings.Mid(BodyText, StartPosition, OverviewLength);
-                                    } else if ((SpanLength == 0) || (SpanLength > OverviewLength)) {
+                                        Body = ATag + "<img src=\"" + PrimaryImageLink + "\" width=\"100\" border=0 class=\"image\"></a>" + Body;
+                                    } else if (PrimaryImageWidth > PrimaryImageHeight) {
                                         // 
-                                        // only one found or the span is long, return 100 before min, 100 after min
+                                        // width > height, set width=100
                                         // 
-                                        StartPosition = Convert.ToInt32(MinPosition - (OverviewLength / 2.0));
-                                        if (StartPosition < 1) {
-                                            // 
-                                            // Start at the first position of bodytext
-                                            // 
-                                            StartPosition = 1;
-                                            if (BodyText.Length > OverviewLength) {
-                                                PostBodyText = "...";
-                                            }
-                                            BodyText = Strings.Mid(BodyText, StartPosition, OverviewLength);
-                                        } else if ((StartPosition + OverviewLength) > BodyText.Length) {
-                                            // 
-                                            // End the copy at the end of the bodytext
-                                            // 
-                                            StartPosition = BodyText.Length - OverviewLength + 1;
-                                            BodyText = Strings.Mid(BodyText, StartPosition);
-                                            PreBodyText = "...";
-                                        } else {
-                                            BodyText = Strings.Mid(BodyText, StartPosition, OverviewLength);
-                                            PreBodyText = "...";
-                                            PostBodyText = "...";
-                                        }
+                                        Body = ATag + "<img src=\"" + PrimaryImageLink + "\" width=\"100\" border=0 class=\"image\"></a>" + Body;
                                     } else {
                                         // 
-                                        // Span is short, return the span, some before, some after
+                                        // height > width, set height=100
                                         // 
-                                        StartPosition = Convert.ToInt32(MinPosition - ((OverviewLength - SpanLength) / 2.0));
-                                        if (StartPosition < 1) {
-                                            // 
-                                            // Start at the first position of bodytext
-                                            // 
-                                            StartPosition = 1;
-                                            if (BodyText.Length > OverviewLength) {
-                                                PostBodyText = "...";
-                                            }
-                                            BodyText = Strings.Mid(BodyText, StartPosition, OverviewLength);
-                                        } else if ((StartPosition + OverviewLength) > BodyText.Length) {
-                                            // 
-                                            // End the copy at the end of the bodytext
-                                            // 
-                                            StartPosition = BodyText.Length - OverviewLength + 1;
-                                            BodyText = Strings.Mid(BodyText, StartPosition);
-                                            PreBodyText = "...";
-                                        } else {
-                                            BodyText = Strings.Mid(BodyText, StartPosition, OverviewLength);
-                                            PreBodyText = "...";
-                                            PostBodyText = "...";
-                                        }
+                                        Body = ATag + "<img src=\"" + PrimaryImageLink + "\" height=\"100\" border=0 class=\"image\"></a>" + Body;
                                     }
                                 }
-                                // 
-                                // bold all occurances of each keywords, keep the min and max position
-                                // 
-                                for (Index = 0; Index <= Information.UBound(KeywordSplit, 1); Index++) {
-                                    Keyword = KeywordSplit[Index];
-                                    int KeyWordLength = Keyword.Length;
-                                    if (Keyword != "") {
-                                        int KeywordPosition = Strings.InStr(1, BodyText, Keyword, CompareMethod.Text);
-                                        int LoopCount = 0;
-                                        while (KeywordPosition != 0 && (LoopCount < 100)) {
-                                            string SourceWord = Strings.Mid(BodyText, KeywordPosition, KeyWordLength);
-                                            if (KeywordPosition == 1) {
-                                                BodyText = "<b>" + Strings.Mid(BodyText, KeywordPosition, KeyWordLength) + "</b>" + Strings.Mid(BodyText, KeywordPosition + KeyWordLength);
-                                            } else {
-                                                BodyText = Strings.Mid(BodyText, 1, KeywordPosition - 1) + "<b>" + Strings.Mid(BodyText, KeywordPosition, KeyWordLength) + "</b>" + Strings.Mid(BodyText, KeywordPosition + KeyWordLength);
-                                            }
-                                            KeywordPosition = Strings.InStr((KeywordPosition + KeyWordLength + 6), BodyText, Keyword, CompareMethod.Text);
-                                            LoopCount += 1;
-                                        }
-                                    }
-                                }
-                                Body = PreBodyText + BodyText + PostBodyText;
-                            }
-                            // 
-                            string LinkLabel = CSSearch.GetText("LinkLabel");
-                            string Link = CSSearch.GetText("Link");
-                            string ATag = "<a href=\"" + Link + "\">";
-                            // 
-                            string Caption = ATag + LinkLabel + "</a>";
-                            if (IncludeImage && (PrimaryImageLink != "")) {
-                                if (PrimaryImageWidth == 0 && PrimaryImageHeight == 0) {
-                                    // 
-                                    // No dimensions, set width=100
-                                    // 
-                                    Body = ATag + "<img src=\"" + PrimaryImageLink + "\" width=\"100\" border=0 class=\"image\"></a>" + Body;
-                                } else if (PrimaryImageWidth > PrimaryImageHeight) {
-                                    // 
-                                    // width > height, set width=100
-                                    // 
-                                    Body = ATag + "<img src=\"" + PrimaryImageLink + "\" width=\"100\" border=0 class=\"image\"></a>" + Body;
+                                string Detail = "";
+                                if (Length <= 0) {
+                                    Detail = ATag + Link + "</a>";
+                                } else if (Length < 1024) {
+                                    Detail = ATag + Link + "</a> " + Convert.ToString(Length) + " characters";
                                 } else {
-                                    // 
-                                    // height > width, set height=100
-                                    // 
-                                    Body = ATag + "<img src=\"" + PrimaryImageLink + "\" height=\"100\" border=0 class=\"image\"></a>" + Body;
+                                    Detail = ATag + Link + "</a> " + cp.Utils.EncodeInteger(Length / 1024.0) + "K characters";
                                 }
+                                GetTextSearch = GetTextSearch + "\r\n" + "\t" + "<div class=\"listItemCon\">" + "\r\n" + "\t" + "\t" + "<div class=\"caption\">" + Caption + "</div>";
+                                if (IncludeDescription || IncludeImage) {
+                                    GetTextSearch = GetTextSearch + "\r\n" + "\t" + "\t" + "<div class=\"body\">" + Body + "</div>";
+                                }
+                                GetTextSearch = GetTextSearch + "\r\n" + "\t" + "\t" + "<div class=\"detail\">" + Detail + "</div>" + "\r\n" + "\t" + "</div>";
+                                CSSearch.GoNext();
+                                int RecordPointer = 0;
+                                RecordPointer += 1;
+                                RowPointer += 1;
                             }
-                            string Detail = "";
-                            if (Length <= 0) {
-                                Detail = ATag + Link + "</a>";
-                            } else if (Length < 1024) {
-                                Detail = ATag + Link + "</a> " + Convert.ToString(Length) + " characters";
-                            } else {
-                                Detail = ATag + Link + "</a> " + cp.Utils.EncodeInteger(Length / 1024.0) + "K characters";
-                            }
-                            GetTextSearch = GetTextSearch + "\r\n" + "\t" + "<div class=\"listItemCon\">" + "\r\n" + "\t" + "\t" + "<div class=\"caption\">" + Caption + "</div>";
-                            if (IncludeDescription || IncludeImage) {
-                                GetTextSearch = GetTextSearch + "\r\n" + "\t" + "\t" + "<div class=\"body\">" + Body + "</div>";
-                            }
-                            GetTextSearch = GetTextSearch + "\r\n" + "\t" + "\t" + "<div class=\"detail\">" + Detail + "</div>" + "\r\n" + "\t" + "</div>";
-                            CSSearch.GoNext();
-                            int RecordPointer = 0;
-                            RecordPointer += 1;
-                            RowPointer += 1;
                         }
                     }
                 }
