@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="windows-1252"?>
-<Collection name="Text Search 2" guid="{996BBC70-5941-4C02-B54B-03B8D6EF430B}" system="No" updatable="Yes" blockNavigatorNode="No">
+<Collection name="Text Search 2" guid="{996BBC70-5941-4C02-B54B-03B8D6EF430B}" system="No" updatable="Yes" blockNavigatorNode="No"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="https://contensive.s3.amazonaws.com/xsd/Collection.xsd"
+>
 	<HelpLink>http://support.contensive.com/Text-Search-Addon</HelpLink>
 	<Help></Help>
 	<Addon name="Text Search 2" guid="{57A66186-9704-48E2-A718-844107E4D305}" type="Add-on">
