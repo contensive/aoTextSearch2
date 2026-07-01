@@ -8,7 +8,6 @@
 	<Addon name="Text Search 2" guid="{57A66186-9704-48E2-A718-844107E4D305}" type="Add-on">
 		<Copy></Copy>
 		<CopyText></CopyText>
-		<ActiveXProgramID></ActiveXProgramID>
 		<DotNetClass><![CDATA[Contensive.Addons.TextSearch.SearchFormClass]]></DotNetClass>
 		<ArgumentList><![CDATA[Search Results Page=Here[Here:0|ListID(Page Content)]
 			Include Search Results=Yes[Yes]checkbox
