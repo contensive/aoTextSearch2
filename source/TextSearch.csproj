@@ -10,6 +10,8 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Contensive.CPBaseClass" Version="26.6.26.18261" />
+    <PackageReference Include="Contensive.CPBaseClass" Version="26.7.22.18901" />
+    <PackageReference Include="Contensive.DbModels" Version="26.7.22.18901" />
+    <PackageReference Include="Contensive.DesignBlockBase" Version="26.7.29.9674" />
   </ItemGroup>
 </Project>

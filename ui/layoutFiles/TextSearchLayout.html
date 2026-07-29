@@ -1,0 +1,64 @@
+<meta name="layout" content="Text Search Widget">
+<style>
+.textSearch2Con {}
+.textSearch2Con .searchFormCon {clear:both;padding-top:20px;padding-bottom:20px;}
+.textSearch2Con .searchResultsCon .summary {padding-top:10px;padding-bottom:10px;text-align:right;}
+.textSearch2Con .searchResultsCon .listItemCon {clear:both;}
+.textSearch2Con .searchResultsCon .listItemCon .image {float:left;margin-top:10px;margin-right:10px;margin-bottom:10px;}
+.textSearch2Con .searchResultsCon .listItemCon .caption {font-size:120%;font-weight:bold;padding-top:15px;text-align:left;}
+.textSearch2Con .searchResultsCon .listItemCon .caption a {text-decoration:underline}
+.textSearch2Con .searchResultsCon .listItemCon .caption a:hover {}
+.textSearch2Con .searchResultsCon .listItemCon .caption a:visited {}
+.textSearch2Con .searchResultsCon .listItemCon .body {padding-top:5px;}
+.textSearch2Con .searchResultsCon .listItemCon .detail {font-size:90%;padding-top:5px;}
+.textSearch2Con .searchResultsCon .listItemCon .detail a {text-decoration:none;color:green;}
+.textSearch2Con .searchResultsCon .listItemCon .detail a:hover {text-decoration:none;color:green;}
+.textSearch2Con .searchResultsCon .listItemCon .detail a:visited {text-decoration:none;color:green;}
+.textSearch2Con .searchResultsCon .pageLinkCon {padding-left:20px;padding-top:10px;padding-bottom:10px;height:30px;clear:both;display:table;}
+.textSearch2Con .searchResultsCon .pageLinkCon ul {list-style:none;margin:0;padding:0;}
+.textSearch2Con .searchResultsCon .pageLinkCon ul li {background-color:white;margin-right:0px;line-height:28px;float:left;}
+.textSearch2Con .searchResultsCon .pageLinkCon ul li div {display:inline;background-color:white;width:20px;height:20px;padding:5px;text-align:center;border:1px solid black;margin:0 2px 2px 0;}
+.textSearch2Con .tsSections {clear: both; margin: 0 0 0 0; padding: 8px 0 0 0; }
+.textSearch2Con .tsSectionHead {border-bottom: 1px solid #888; padding: 10px 0 5px 0; clear: both;}
+.textSearch2Con .tsSectionList {list-style-type:none}
+.textSearch2Con .tsSectionList li {list-style-type:none; float:left; width:200px; }
+.textSearch2Con .tsSectionList li input {float: left;}
+.textSearch2Con .tsSectionList li p {margin: 0 0 0 30px;}
+.textSearch2Con .tsTopics {clear: both; margin: 0 0 0 0; padding: 8px 0 0 0; }
+.textSearch2Con .tsTopicHead {border-bottom: 1px solid #888; padding: 10px 0 5px 0; clear: both;}
+.textSearch2Con .tsTopicList {list-style-type:none}
+.textSearch2Con .tsTopicList li {list-style-type:none; float:left; width:200px; }
+.textSearch2Con .tsTopicList li input {float: left;}
+.textSearch2Con .tsTopicList li p {margin: 0 0 0 30px;}
+.textSearch2Con .tsToolBar {clear: both; margin: 20px 0 0 0 }
+.textSearch2Con .tsSectionBlocks {clear: both; margin: 0 0 0 0; padding: 8px 0 0 0; }
+.textSearch2Con .tsSectionBlockList {list-style-type:none}
+.textSearch2Con .tsSectionBlockList li {list-style-type:none; float:left; width:200px; }
+.textSearch2Con .tsSectionBlockList li input {float: left;}
+.textSearch2Con .tsSectionBlockList li p {margin: 0 0 0 30px;}
+.textSearch2Con .tsToolBar .tsButton {clear: both; margin: 0 0 0 0; padding: 8px 0 0 0; }
+</style>
+<script>
+function textSearchClr(name) {
+    var n=document.getElementsByName(name);
+    for(var i=0;i<n.length;i++){
+        n[i].checked=false
+    }
+}
+</script>
+<div class="{{outerContainerClass}} designBlockContainer" style="{{styleHeight}}{{styleBackgroundImage}}">
+    <div class="{{contentContainerClass}}">
+        <div class="textSearch2Con">
+            {{{searchResultsHtml}}}
+            <div class="searchFormCon">
+                <form action="{{actionPage}}" method="post">
+                    {{{refreshHiddens}}}
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="TextSearchWordList" maxlength="255" value="{{wordList}}" placeholder="Search..." aria-label="Search" />
+                        <button class="btn btn-primary" type="submit" name="Button" value="Search">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
