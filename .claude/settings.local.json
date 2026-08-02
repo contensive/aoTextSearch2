@@ -3,7 +3,8 @@
     "allow": [
       "Bash(dotnet nuget search:*)",
       "Bash(dotnet build:*)",
-      "Bash(dotnet restore:*)"
+      "Bash(dotnet restore:*)",
+      "Bash(grep:*)"
     ]
   }
 }

@@ -86,12 +86,10 @@ namespace Contensive.Addons.TextSearch {
                             ResultsLine = $"Results {1 + RowBAse} to {RowLast} of {DataRowCount} for {resultLineDetails}";
                             while (CSSearch.OK() && (RowPointer < iPageSize)) {
                                 string PrimaryImageLink = CSSearch.GetText("PrimaryImageLink");
-                                int PrimaryImageWidth = CSSearch.GetInteger("PrimaryImageWidth");
-                                int PrimaryImageHeight = CSSearch.GetInteger("PrimaryImageHeight");
-                                int Length = CSSearch.GetInteger("Length");
                                 string Body = "";
                                 if (IncludeDescription) {
                                     string BodyText = CSSearch.GetText("BodyText");
+                                    BodyText = System.Net.WebUtility.HtmlDecode(BodyText);
                                     BodyText = System.Net.WebUtility.HtmlEncode(BodyText);
                                     string PostBodyText = "";
                                     string PreBodyText = "";
@@ -179,22 +177,9 @@ namespace Contensive.Addons.TextSearch {
                                 string ATag = $"<a href=\"{Link}\">";
                                 string Caption = $"{ATag}{LinkLabel}</a>";
                                 if (IncludeImage && (PrimaryImageLink != "")) {
-                                    if (PrimaryImageWidth == 0 && PrimaryImageHeight == 0) {
-                                        Body = $"{ATag}<img src=\"{PrimaryImageLink}\" width=\"100\" border=0 class=\"image\"></a>{Body}";
-                                    } else if (PrimaryImageWidth > PrimaryImageHeight) {
-                                        Body = $"{ATag}<img src=\"{PrimaryImageLink}\" width=\"100\" border=0 class=\"image\"></a>{Body}";
-                                    } else {
-                                        Body = $"{ATag}<img src=\"{PrimaryImageLink}\" height=\"100\" border=0 class=\"image\"></a>{Body}";
-                                    }
+                                    Body = $"{ATag}<img src=\"{PrimaryImageLink}\" width=\"100\" border=0 class=\"image\"></a>{Body}";
                                 }
-                                string Detail = "";
-                                if (Length <= 0) {
-                                    Detail = $"{ATag}{Link}</a>";
-                                } else if (Length < 1024) {
-                                    Detail = $"{ATag}{Link}</a> {Length} characters";
-                                } else {
-                                    Detail = $"{ATag}{Link}</a> {cp.Utils.EncodeInteger(Length / 1024.0)}K characters";
-                                }
+                                string Detail = $"{ATag}{Link}</a>";
                                 result += $"\r\n\t<div class=\"listItemCon\">\r\n\t\t<div class=\"caption\">{Caption}</div>";
                                 if (IncludeDescription || IncludeImage) {
                                     result += $"\r\n\t\t<div class=\"body\">{Body}</div>";
@@ -242,7 +227,7 @@ namespace Contensive.Addons.TextSearch {
                     int Ptr;
                     for (Ptr = PageLinkStart; Ptr <= PageLinkEnd; Ptr++) {
                         if (Ptr == PageNumber) {
-                            Footer += $"\r\n\t\t<li><div>{Ptr}</div></li>";
+                            Footer += $"\r\n\t\t<li><div class=\"active\">{Ptr}</div></li>";
                         } else {
                             QS = cp.Utils.ModifyQueryString(QS, "pagenumber", Convert.ToString(Ptr), true);
                             Footer += $"\r\n\t\t<li><div><a href=\"?{QS}\">{Ptr}</a></div></li>";
@@ -273,11 +258,23 @@ namespace Contensive.Addons.TextSearch {
             try {
                 if (KeyWordList.Trim() != "") {
                     bool useFullText = cp.Site.GetBoolean(Constants.sitePropertyUseFullTextSearch);
+                    //
+                    // -- verify the full-text index exists before using CONTAINS
+                    if (useFullText) {
+                        try {
+                            System.Data.DataTable dtFt = cp.Db.ExecuteQuery("SELECT OBJECTPROPERTY(OBJECT_ID('ccSpiderDocs'), 'TableFullTextCatalogId') AS CatalogId");
+                            if (dtFt.Rows.Count == 0 || dtFt.Rows[0]["CatalogId"] == DBNull.Value || Convert.ToInt32(dtFt.Rows[0]["CatalogId"]) == 0) {
+                                useFullText = false;
+                            }
+                        } catch {
+                            useFullText = false;
+                        }
+                    }
                     string[] KeywordSplit = KeyWordList.Split(' ');
                     int WordCount = KeywordSplit.Length;
                     string WordSearchExcludeList = GetWordSearchExcludeList(cp);
                     string sqlFrom = "ccSpiderDocs d";
-                    string sqlWhere = "(d.Active<>0)and((d.duplicatecontent<>1)or(d.duplicatecontent is null))";
+                    string sqlWhere = "(d.Active<>0)";
                     string sqlSubWhere = "";
                     string SearchWord = "";
                     int WordPointer = 0;
@@ -383,7 +380,7 @@ namespace Contensive.Addons.TextSearch {
                     }
                     //
                     // -- build and execute the final query
-                    sql = $"SELECT d.ID AS ID, d.Name AS LinkLabel, d.Link AS Link, d.TextOnlyFilename as BriefFilename, d.dateLastModified as dateLastModified, d.MetaKeywords as MetaKeywords, d.MetaDescription as MetaDescription, d.Length as Length, d.BodyText as BodyText, d.PrimaryImageLink as PrimaryImageLink, d.PrimaryImageWidth as PrimaryImageWidth, d.PrimaryImageHeight as PrimaryImageHeight FROM {sqlFrom} WHERE {sqlWhere} ORDER BY d.dateadded desc, d.dateLastModified Desc;";
+                    sql = $"SELECT d.ID AS ID, d.Name AS LinkLabel, d.Link AS Link, d.dateLastModified as dateLastModified, d.MetaKeywords as MetaKeywords, d.MetaDescription as MetaDescription, d.BodyText as BodyText, d.PrimaryImageLink as PrimaryImageLink FROM {sqlFrom} WHERE {sqlWhere} ORDER BY d.dateadded desc, d.dateLastModified Desc;";
                     csResult.OpenSQL(sql, "", PageSize, PageNumber);
                 }
                 return csResult;

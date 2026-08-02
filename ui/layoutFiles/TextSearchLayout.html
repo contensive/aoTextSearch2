@@ -1,8 +1,8 @@
 <meta name="layout" content="Text Search Widget">
 <style>
 .textSearch2Con {}
-.textSearch2Con .searchFormCon {clear:both;padding-top:20px;padding-bottom:20px;}
-.textSearch2Con .searchResultsCon .summary {padding-top:10px;padding-bottom:10px;text-align:right;}
+.textSearch2Con .searchFormCon {clear:both;padding-top:20px;padding-bottom:20px;max-width:400px;}
+.textSearch2Con .searchResultsCon .summary {padding-top:10px;padding-bottom:10px;text-align:left;}
 .textSearch2Con .searchResultsCon .listItemCon {clear:both;}
 .textSearch2Con .searchResultsCon .listItemCon .image {float:left;margin-top:10px;margin-right:10px;margin-bottom:10px;}
 .textSearch2Con .searchResultsCon .listItemCon .caption {font-size:120%;font-weight:bold;padding-top:15px;text-align:left;}
@@ -14,10 +14,12 @@
 .textSearch2Con .searchResultsCon .listItemCon .detail a {text-decoration:none;color:green;}
 .textSearch2Con .searchResultsCon .listItemCon .detail a:hover {text-decoration:none;color:green;}
 .textSearch2Con .searchResultsCon .listItemCon .detail a:visited {text-decoration:none;color:green;}
-.textSearch2Con .searchResultsCon .pageLinkCon {padding-left:20px;padding-top:10px;padding-bottom:10px;height:30px;clear:both;display:table;}
-.textSearch2Con .searchResultsCon .pageLinkCon ul {list-style:none;margin:0;padding:0;}
-.textSearch2Con .searchResultsCon .pageLinkCon ul li {background-color:white;margin-right:0px;line-height:28px;float:left;}
-.textSearch2Con .searchResultsCon .pageLinkCon ul li div {display:inline;background-color:white;width:20px;height:20px;padding:5px;text-align:center;border:1px solid black;margin:0 2px 2px 0;}
+.textSearch2Con .searchResultsCon .pageLinkCon {padding-left:20px;padding-top:20px;padding-bottom:10px;clear:both;display:flex;flex-wrap:wrap;}
+.textSearch2Con .searchResultsCon .pageLinkCon ul {list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;column-gap:4px;row-gap:6px;}
+.textSearch2Con .searchResultsCon .pageLinkCon ul li {line-height:28px;}
+.textSearch2Con .searchResultsCon .pageLinkCon ul li div {display:inline-block;padding:4px 8px;text-align:center;border:1px solid black;background-color:white;}
+.textSearch2Con .searchResultsCon .pageLinkCon ul li div.active {background-color:black;color:white;}
+.textSearch2Con .searchResultsCon .pageLinkCon ul li div a {display:block;text-decoration:none;color:inherit;}
 .textSearch2Con .tsSections {clear: both; margin: 0 0 0 0; padding: 8px 0 0 0; }
 .textSearch2Con .tsSectionHead {border-bottom: 1px solid #888; padding: 10px 0 5px 0; clear: both;}
 .textSearch2Con .tsSectionList {list-style-type:none}

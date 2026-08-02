@@ -12,10 +12,9 @@ namespace Contensive.Addons.TextSearch {
                     Constants.pathFilenameLayoutTextSearch
                 );
                 //
-                // -- if full-text search is enabled, ensure the catalog and index exist
-                if (cp.Site.GetBoolean(Constants.sitePropertyUseFullTextSearch)) {
-                    ensureFullTextIndex(cp);
-                }
+                // -- always ensure the full-text catalog and index exist
+                // -- the index must be ready before the site property is enabled
+                ensureFullTextIndex(cp);
             } catch (Exception ex) {
                 cp.Site.ErrorReport(ex, "TextSearch.OnInstallAddon.Execute");
             }

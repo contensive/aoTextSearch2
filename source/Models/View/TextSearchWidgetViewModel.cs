@@ -42,7 +42,7 @@ namespace Contensive.Addons.TextSearch.Models.View {
                 string searchResultsURL = "";
                 if (pageId != 0) {
                     try {
-                        searchResultsURL = cp.Content.GetPageLink(pageId, "", false);
+                        searchResultsURL = cp.Content.GetPageLink(pageId, "");
                     } catch {
                         using (var cs = cp.CSNew()) {
                             if (cs.Open("Content Watch", $"recordid={pageId}")) {
