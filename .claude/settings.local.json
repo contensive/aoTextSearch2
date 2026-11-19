@@ -4,7 +4,8 @@
       "Bash(dotnet nuget search:*)",
       "Bash(dotnet build:*)",
       "Bash(dotnet restore:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(unzip:*)"
     ]
   }
 }

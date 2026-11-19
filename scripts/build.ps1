@@ -13,7 +13,7 @@ $projectRoot = (Resolve-Path "$PSScriptRoot\..").Path
 
 Invoke-ContensiveBuild `
     -CollectionName    'aoTextSearch' `
-    -CollectionPath    "$projectRoot\collections\aoTextSearch" `
+    -CollectionPath    "$projectRoot\collections" `
     -SolutionPath      "$projectRoot\source\TextSearch.sln" `
     -BinPath           "$projectRoot\source\bin\Release\netstandard2.0" `
     -DeploymentRoot    'C:\Deployments\aoTextSearch2' `
